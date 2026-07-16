@@ -47,14 +47,12 @@ button {
   color: #fff;
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
   .filters {
     padding: 16px;
   }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   .filters {
     background: #111;
@@ -62,7 +60,6 @@ button {
   }
 }
 
-/* Small mobile */
 @media (max-width: 480px) {
   input[type="text"] {
     padding: 8px;

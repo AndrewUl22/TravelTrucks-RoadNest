@@ -15,10 +15,7 @@ export default async function CamperPage({ params }: { params: { id: string } })
   try {
     const { id } = params;
 
-    // основной запрос
     const camper: CamperDetails = await getCamperById(id);
-
-    // отзывы — отдельный запрос
     const reviews: Review[] = await getCamperReviews(id);
 
     return (
@@ -32,9 +29,7 @@ export default async function CamperPage({ params }: { params: { id: string } })
             <h1 className={styles.title}>{camper.name}</h1>
 
             <div className={styles.meta}>
-              <span>
-                ★ {camper.rating} ({reviews.length} Reviews)
-              </span>
+              <span>★ {camper.rating} ({reviews.length} Reviews)</span>
               <span>⌖ {camper.location}</span>
             </div>
           </div>

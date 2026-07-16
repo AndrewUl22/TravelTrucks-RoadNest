@@ -55,3 +55,44 @@ small {
   font-size: 14px;
   margin-top: 4px;
 }
+
+@media (max-width: 1024px) {
+  .booking {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking {
+    padding: 20px;
+  }
+
+  .booking h2 {
+    font-size: 20px;
+  }
+
+  .booking input,
+  .booking textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .primary {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking h2 {
+    font-size: 18px;
+  }
+
+  .booking p {
+    font-size: 13px;
+  }
+
+  small {
+    font-size: 13px;
+  }
+}

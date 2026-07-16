@@ -1,8 +1,10 @@
 .details {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 0;
   display: flex;
   flex-direction: column;
   gap: 32px;
-  padding: 32px 0;
 }
 
 .backLink {
@@ -16,10 +18,11 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 16px;
 }
 
 .title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
 }
 
@@ -31,10 +34,12 @@
 }
 
 .price {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
+  color: #d00000;
 }
 
+/* Main layout */
 .body {
   display: flex;
   gap: 32px;
@@ -51,18 +56,69 @@
   width: 360px;
 }
 
+/* Description */
 .description {
   font-size: 16px;
   color: #374151;
   line-height: 1.6;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .price {
+    font-size: 24px;
+  }
+
+  .right {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .details {
+    padding: 24px 0;
+  }
+
+  .titleBlock {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .price {
+    font-size: 20px;
+  }
+
   .body {
     flex-direction: column;
   }
 
   .right {
     width: 100%;
+  }
+
+  .description {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .price {
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 14px;
   }
 }

@@ -82,7 +82,6 @@
   font-weight: 600;
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
   .imageWrap {
     height: 160px;
@@ -93,7 +92,6 @@
   }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   .imageWrap {
     height: 140px;
@@ -112,7 +110,6 @@
   }
 }
 
-/* Small mobile */
 @media (max-width: 480px) {
   .imageWrap {
     height: 120px;

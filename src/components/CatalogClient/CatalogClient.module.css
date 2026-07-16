@@ -41,7 +41,6 @@
   cursor: pointer;
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
   .catalog {
     grid-template-columns: 240px 1fr;
@@ -49,7 +48,6 @@
   }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   .catalog {
     grid-template-columns: 1fr;
@@ -68,7 +66,6 @@
   }
 }
 
-/* Small mobile */
 @media (max-width: 480px) {
   .grid {
     grid-template-columns: 1fr;

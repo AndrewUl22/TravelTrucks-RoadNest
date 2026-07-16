@@ -9,27 +9,29 @@ export function CamperReviews({ reviews }: CamperReviewsProps) {
   if (!reviews.length) {
     return (
       <section className={styles.reviews}>
-        <h2>Reviews</h2>
-        <p>No reviews yet.</p>
+        <h2 className={styles.heading}>Reviews</h2>
+        <p className={styles.empty}>No reviews yet.</p>
       </section>
     );
   }
 
   return (
     <section className={styles.reviews}>
-      <h2>Reviews</h2>
+      <h2 className={styles.heading}>Reviews</h2>
 
       <ul className={styles.list}>
         {reviews.map((review) => (
           <li key={review.id} className={styles.item}>
             <div className={styles.header}>
-              <strong>{review.author}</strong>
-              <span>★ {review.rating}</span>
+              <strong className={styles.author}>{review.author}</strong>
+              <span className={styles.rating}>★ {review.rating}</span>
             </div>
-            <p>{review.comment}</p>
+
+            <p className={styles.comment}>{review.comment}</p>
           </li>
         ))}
       </ul>
     </section>
   );
 }
+

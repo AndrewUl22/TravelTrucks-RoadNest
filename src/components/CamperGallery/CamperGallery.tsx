@@ -1,39 +1,44 @@
-import type { CamperDetails } from "@/types/camper";
+"use client";
+
+import Image from "next/image";
 import styles from "./CamperGallery.module.css";
+import type { CamperDetails } from "@/types/camper";
 
-interface CamperGalleryProps {
+type Props = {
   camper: CamperDetails;
-}
+};
 
-export function CamperGallery({ camper }: CamperGalleryProps) {
-  const images = camper.gallery ?? [];
-
-  if (!images.length) {
-    return null;
-  }
-
-  const [main, ...rest] = images;
+export function CamperGallery({ camper }: Props) {
+  const images = camper.gallery && camper.gallery.length > 0
+    ? camper.gallery
+    : [camper.image];
 
   return (
-    <section className={styles.gallery}>
+    <div className={styles.gallery}>
       <div className={styles.main}>
-        <img src={main} alt={camper.name} />
+        <Image
+          src={images[0]}
+          alt={camper.name}
+          fill
+          className={styles.mainImage}
+          priority
+        />
       </div>
 
-      {rest.length > 0 && (
+      {images.length > 1 && (
         <div className={styles.thumbs}>
-          {rest.map((src) => (
-            <button
-              key={src}
-              type="button"
-              className={styles.thumb}
-              onClick={() => {}}
-            >
-              <img src={src} alt={camper.name} />
-            </button>
+          {images.slice(1).map((src) => (
+            <div key={src} className={styles.thumb}>
+              <Image
+                src={src}
+                alt={camper.name}
+                fill
+                className={styles.thumbImage}
+              />
+            </div>
           ))}
         </div>
       )}
-    </section>
+    </div>
   );
 }

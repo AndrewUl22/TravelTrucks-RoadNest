@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 
 const links = [
@@ -14,8 +14,14 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+  }, [open]);
+
   return (
     <header className={styles.header}>
+      {open && <div className={styles.overlay} onClick={() => setOpen(false)} />}
+
       <div className={styles.container}>
         <Link href="/" className={styles.logo} onClick={() => setOpen(false)}>
           <span>Road</span>Nest
