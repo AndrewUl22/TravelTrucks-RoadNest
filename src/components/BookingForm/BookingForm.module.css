@@ -1,0 +1,57 @@
+.booking {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  max-width: 360px;
+}
+
+.booking h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.booking p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.booking input,
+.booking textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+}
+
+.booking textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.primary {
+  background: #ef4444;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.primary:hover {
+  background: #dc2626;
+}
+
+small {
+  color: #374151;
+  font-size: 14px;
+  margin-top: 4px;
+}

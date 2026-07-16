@@ -1,0 +1,74 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.group label {
+  font-weight: 600;
+  color: #fff;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #222;
+  color: #fff;
+}
+
+button {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.search {
+  background: #d00000;
+  color: #fff;
+}
+
+.clear {
+  background: #444;
+  color: #fff;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .filters {
+    padding: 16px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .filters {
+    background: #111;
+    border-radius: 12px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  input[type="text"] {
+    padding: 8px;
+  }
+
+  button {
+    padding: 10px;
+  }
+}

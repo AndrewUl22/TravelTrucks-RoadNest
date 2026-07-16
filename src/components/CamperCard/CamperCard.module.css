@@ -1,0 +1,132 @@
+.card {
+  list-style: none;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.cardLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.imageWrap {
+  height: 180px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.price {
+  color: #d00000;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #555;
+}
+
+.description {
+  font-size: 14px;
+  color: #444;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chips span {
+  background: #eee;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.more {
+  color: #d00000;
+  font-weight: 600;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .imageWrap {
+    height: 160px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .imageWrap {
+    height: 140px;
+  }
+
+  .info {
+    padding: 14px;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+
+  .price {
+    font-size: 16px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .imageWrap {
+    height: 120px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+
+  .chips span {
+    font-size: 11px;
+  }
+}
