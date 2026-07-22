@@ -1,7 +1,7 @@
 TravelTrucks RoadNest
-https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel
-https://img.shields.io/badge/Framework-Next.js-000000?logo=nextdotjs
-https://img.shields.io/badge/License-MIT-green.svg
+https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel  
+https://img.shields.io/badge/Framework-Next.js-000000?logo=nextdotjs  
+https://img.shields.io/badge/License-MIT-green.svg  
 https://img.shields.io/github/stars/AndrewUI22/TravelTrucks-RoadNest?style=social
 
 A modern web platform for exploring, filtering, and comparing travel trucks and campers.
@@ -49,18 +49,16 @@ http://localhost:3000
 Create a .env.local file in the root directory and add the required keys.
 
 Required Variables
-Variable	Description
-NEXT_PUBLIC_API_URL	Base URL for API requests
-API_SECRET_KEY	Private API key
-MONGODB_URI	MongoDB connection string
-NEXT_PUBLIC_MAPBOX_TOKEN	Mapbox token (if maps are used)
-
+Variable Description
+NEXT_PUBLIC_API_URL Base URL for API requests
+API_SECRET_KEY Private API key
+MONGODB_URI MongoDB connection string
+NEXT_PUBLIC_MAPBOX_TOKEN Mapbox token (if maps are used)
 
 Optional Variables
-Variable	Description
-NEXT_PUBLIC_ANALYTICS_ID	Analytics tracking ID
-IMAGE_CDN_URL	Custom CDN for images
-
+Variable Description
+NEXT_PUBLIC_ANALYTICS_ID Analytics tracking ID
+IMAGE_CDN_URL Custom CDN for images
 
 Example .env.local
 env
@@ -70,15 +68,19 @@ MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
 NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
 ⚠️ Never commit .env.local to GitHub.
 
-📸 Screenshots
-Home Page
-[Похоже, результат оказался небезопасным для отображения. Давайте внесем изменения и попробуем что-нибудь другое!]
+## 📸 Screenshots
 
-Catalog / Gallery
-[Похоже, результат оказался небезопасным для отображения. Давайте внесем изменения и попробуем что-нибудь другое!]
+### Home Page
 
-Camper Details Page
-[Похоже, результат оказался небезопасным для отображения. Давайте внесем изменения и попробуем что-нибудь другое!]
+![Home Page](./screenshots/home.png)
+
+### Catalog / Gallery
+
+![Catalog](./screenshots/catalog.png)
+
+### Camper Details Page
+
+![Camper Details](./screenshots/details.png)
 
 🌐 Deployment
 Automatic Deployment (GitHub → Vercel)
@@ -91,15 +93,15 @@ vercel --prod
 Код
 TravelTrucks-RoadNest/
 │
-├── public/              # Static assets
+├── public/ # Static assets
 ├── src/
-│   ├── components/      # Reusable UI components
-│   ├── pages/           # Next.js pages & routing
-│   ├── styles/          # Global and modular styles
-│   ├── utils/           # Helper functions
-│   └── api/             # API routes (if used)
+│ ├── components/ # Reusable UI components
+│ ├── pages/ # Next.js pages & routing
+│ ├── styles/ # Global and modular styles
+│ ├── utils/ # Helper functions
+│ └── api/ # API routes (if used)
 │
-├── screenshots/         # Project screenshots
+├── screenshots/ # Project screenshots
 ├── package.json
 └── README.md
 🤝 Contributing
