@@ -1,118 +1,142 @@
-TravelTrucks RoadNest
-https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel  
-https://img.shields.io/badge/Framework-Next.js-000000?logo=nextdotjs  
-https://img.shields.io/badge/License-MIT-green.svg  
-https://img.shields.io/github/stars/AndrewUI22/TravelTrucks-RoadNest?style=social
+# **TravelTrucks RoadNest**
 
-A modern web platform for exploring, filtering, and comparing travel trucks and campers.
-Built with performance, usability, and clean design in mind, TravelTrucks RoadNest provides an intuitive interface for discovering vehicles tailored to your travel needs.
+A modern web application for discovering, filtering, and comparing campers.  
+Built with **Next.js App Router**, clean UI, advanced filtering, detailed vehicle pages, and smooth user experience.
 
-🚀 Features
-Advanced Filtering System  
-Filter campers by type, price, location, engine, and specifications.
+---
 
-Modern Responsive UI  
-Fully optimized for desktop, tablet, and mobile devices.
+## **Main Features**
 
-Detailed Camper Pages  
-Each vehicle includes images, descriptions, and technical specifications.
+### **🏠 Home Page (/)**  
+- Hero banner with a primary call‑to‑action  
+- Quick navigation to the catalog  
+- Fully responsive layout for all devices  
 
-Fast Performance  
-Powered by Next.js with optimized rendering and routing.
+---
 
-Smooth User Experience  
-Clean navigation, consistent design, and accessible interface.
+### **📚 Camper Catalog (/catalog)**  
+- Filtering by:
+  - location  
+  - body type  
+  - engine  
+  - transmission  
+  - price  
+- Fetching available filter options from API  
+- Infinite loading of camper cards  
+- **Load more** button for pagination  
+- Loading states, overlay during refetch, error handling  
+- **No results** state when filters return nothing  
 
-🛠 Tech Stack
-Next.js 13+ (App Router)
+---
 
-React
+### **🚐 Camper Card**  
+- Image  
+- Title  
+- Price  
+- Rating & review count  
+- Location  
+- Short description  
+- Feature badges (engine, transmission, body type)  
+- Link to detailed camper page  
 
-CSS Modules / Tailwind
+---
 
-Node.js
+### **🔍 Camper Details Page (/catalog/[camperId])**  
+- Swiper gallery with main image + thumbnail navigation  
+- Full vehicle description  
+- Amenities and technical specifications  
+- User reviews with rating  
+- Booking form with validation  
 
-MongoDB (if used)
+---
 
-Vercel
+## **Technical Solutions**
 
-📦 Installation
-bash
-git clone https://github.com/AndrewUI22/TravelTrucks-RoadNest.git
-cd TravelTrucks-RoadNest
-npm install
-npm run dev
-Open in browser:
-http://localhost:3000
+- API logic isolated in `src/services`:
+  - base `apiFetch`  
+  - query params handling  
+  - `ApiError`  
+  - separate modules for campers, reviews, filters, booking  
+- Base API URL provided via `NEXT_PUBLIC_API_URL`  
+- Catalog powered by **useInfiniteQuery**:
+  - page control  
+  - caching  
+  - refetch  
+  - incremental loading  
+- Filters stored in catalog page state and included in `queryKey`  
+- Camper details page split into independent components:
+  - `CamperGallery`  
+  - `VehicleDetails`  
+  - `CamperReviews`  
+  - `BookingForm`  
+- Gallery implemented with Swiper  
+- Booking form includes client‑side validation, ARIA attributes, and mutation request  
+- UI states extracted into reusable components:
+  - `Spinner`  
+  - `LoadingOverlay`  
+  - `NoResults`  
+  - `LoadMoreButton`  
+- Styling via CSS Modules for isolated component styles  
 
-🔐 Environment Variables
-Create a .env.local file in the root directory and add the required keys.
+---
 
-Required Variables
-Variable	Description
-NEXT_PUBLIC_API_URL	Base URL for API requests
-API_SECRET_KEY	Private API key
-MONGODB_URI	MongoDB connection string
-NEXT_PUBLIC_MAPBOX_TOKEN	Mapbox token (if maps are used)
+## **Project Structure**
 
-
-Optional Variables
-Variable	Description
-NEXT_PUBLIC_ANALYTICS_ID	Analytics tracking ID
-IMAGE_CDN_URL	Custom CDN for images
+src/
+├── app/          # Next.js App Router pages & layouts
+├── components/   # Reusable UI components
+├── hooks/        # Custom React hooks
+├── providers/    # Global providers (theme, context, etc.)
+├── services/     # API services & data fetching logic
+├── types/        # TypeScript types & interfaces
+└── utils/        # Helper functions
 
 
-Example .env.local
-env
-NEXT_PUBLIC_API_URL=https://api.yourdomain.com
-API_SECRET_KEY=your-secret-key
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
-NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
-⚠️ Never commit .env.local to GitHub.
+---
 
-## 📸 Screenshots
+## **Challenges & Result**
 
-### Home Page
+The main challenge was handling asynchronous data:  
+the catalog must react to filters, support pagination, show intermediate loading states, and properly handle API errors.
+
+The camper details page required combining gallery, specifications, reviews, and booking form — each with its own logic — while keeping the page cohesive and user‑friendly.
+
+**Result:**  
+A production‑ready application for browsing and booking campers with filtering, infinite catalog loading, detailed pages, reviews, booking flow, and Vercel deployment.
+
+---
+
+## **Tech Stack**
+
+- **Next.js 13+ App Router**  
+- **React 19**  
+- **TypeScript**  
+- **TanStack Query**  
+- **CSS Modules / Tailwind**  
+- **Swiper**  
+- **React Icons**  
+- **React Hot Toast**  
+
+---
+
+## **📸 Screenshots**
+
 ![Home Page](./screenshots/home.png)
-
-### Catalog / Gallery
 ![Catalog](./screenshots/catalog.png)
-
-### Camper Details Page
-![Camper Details](./screenshots/details.png)
-
+![Details](./screenshots/details.png)
 
 🌐 Deployment
-Automatic Deployment (GitHub → Vercel)
-Every push to the main branch triggers an automatic build and deployment.
+Automatic Deployment
+Every push to main triggers a Vercel build and deployment.
 
-Manual Deployment (CLI)
-bash
+Manual Deployment
+
 vercel --prod
-📁 Project Structure
-Код
-TravelTrucks-RoadNest/
-│
-├── public/                 # Static assets
-│
-├── src/
-│   ├── app/                # Next.js App Router pages & layouts
-│   ├── components/         # Reusable UI components
-│   ├── hooks/              # Custom React hooks
-│   ├── providers/          # Global providers (theme, context, etc.)
-│   ├── services/           # API services, data fetching logic
-│   ├── types/              # TypeScript types & interfaces
-│   └── utils/              # Helper functions & utilities
-│
-├── screenshots/            # Project screenshots
-├── package.json
-└── README.md
-🤝 Contributing
-Contributions, issues, and feature requests are welcome.
-Feel free to open a pull request or report a bug.
 
 📄 License
 This project is licensed under the MIT License.
 
 ⭐ Support the Project
-If you like this project, consider starring the repository — it helps visibility and motivates further development.
+If you enjoy this project, consider giving it a star — it helps visibility and motivates further development.
+
+
