@@ -24,17 +24,17 @@ Smooth User Experience
 Clean navigation, consistent design, and accessible interface.
 
 🛠 Tech Stack
-Next.js — SSR & SSG
+Next.js 13+ (App Router)
 
-React — UI components
+React
 
-CSS Modules / Tailwind — styling
+CSS Modules / Tailwind
 
-Node.js — backend logic
+Node.js
 
-MongoDB — database (if used)
+MongoDB (if used)
 
-Vercel — hosting & deployment
+Vercel
 
 📦 Installation
 bash
@@ -49,16 +49,18 @@ http://localhost:3000
 Create a .env.local file in the root directory and add the required keys.
 
 Required Variables
-Variable Description
-NEXT_PUBLIC_API_URL Base URL for API requests
-API_SECRET_KEY Private API key
-MONGODB_URI MongoDB connection string
-NEXT_PUBLIC_MAPBOX_TOKEN Mapbox token (if maps are used)
+Variable	Description
+NEXT_PUBLIC_API_URL	Base URL for API requests
+API_SECRET_KEY	Private API key
+MONGODB_URI	MongoDB connection string
+NEXT_PUBLIC_MAPBOX_TOKEN	Mapbox token (if maps are used)
+
 
 Optional Variables
-Variable Description
-NEXT_PUBLIC_ANALYTICS_ID Analytics tracking ID
-IMAGE_CDN_URL Custom CDN for images
+Variable	Description
+NEXT_PUBLIC_ANALYTICS_ID	Analytics tracking ID
+IMAGE_CDN_URL	Custom CDN for images
+
 
 Example .env.local
 env
@@ -71,16 +73,14 @@ NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
 ## 📸 Screenshots
 
 ### Home Page
-
 ![Home Page](./screenshots/home.png)
 
 ### Catalog / Gallery
-
 ![Catalog](./screenshots/catalog.png)
 
 ### Camper Details Page
-
 ![Camper Details](./screenshots/details.png)
+
 
 🌐 Deployment
 Automatic Deployment (GitHub → Vercel)
@@ -93,15 +93,18 @@ vercel --prod
 Код
 TravelTrucks-RoadNest/
 │
-├── public/ # Static assets
-├── src/
-│ ├── components/ # Reusable UI components
-│ ├── pages/ # Next.js pages & routing
-│ ├── styles/ # Global and modular styles
-│ ├── utils/ # Helper functions
-│ └── api/ # API routes (if used)
+├── public/                 # Static assets
 │
-├── screenshots/ # Project screenshots
+├── src/
+│   ├── app/                # Next.js App Router pages & layouts
+│   ├── components/         # Reusable UI components
+│   ├── hooks/              # Custom React hooks
+│   ├── providers/          # Global providers (theme, context, etc.)
+│   ├── services/           # API services, data fetching logic
+│   ├── types/              # TypeScript types & interfaces
+│   └── utils/              # Helper functions & utilities
+│
+├── screenshots/            # Project screenshots
 ├── package.json
 └── README.md
 🤝 Contributing
