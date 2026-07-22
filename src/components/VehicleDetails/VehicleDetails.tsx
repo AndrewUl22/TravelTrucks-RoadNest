@@ -1,60 +1,60 @@
 import type { CamperDetails } from "@/types/camper";
+import { formatLabel } from "@/utils/formatLabel";
+import { getAmenityIcon } from "@/utils/amenityIcons";
 import styles from "./VehicleDetails.module.css";
 
 interface VehicleDetailsProps {
   camper: CamperDetails;
 }
 
-export function VehicleDetails({ camper }: VehicleDetailsProps) {
+const SPEC_ROWS: Array<{ label: string; getValue: (camper: CamperDetails) => string }> = [
+  { label: "Form", getValue: (camper) => formatLabel(camper.form) },
+  { label: "Length", getValue: (camper) => camper.length },
+  { label: "Width", getValue: (camper) => camper.width },
+  { label: "Height", getValue: (camper) => camper.height },
+  { label: "Tank", getValue: (camper) => camper.tank },
+  { label: "Consumption", getValue: (camper) => camper.consumption },
+];
+
+const VehicleDetails = ({ camper }: VehicleDetailsProps) => {
   return (
-    <section className={styles.details}>
-      <h2 className={styles.heading}>Vehicle details</h2>
+    <div className={styles.wrapper}>
+      <h2 className={styles.title}>Vehicle details</h2>
 
-      <dl className={styles.list}>
-        <div className={styles.row}>
-          <dt>Form</dt>
-          <dd>{camper.form}</dd>
-        </div>
+      <div className={styles.badges}>
+        <span className={styles.badge}>
+          <img className={styles.badgeIcon} src="/campersImage/automatic.svg" alt="" />
+          {formatLabel(camper.transmission)}
+        </span>
+        <span className={styles.badge}>
+          <img className={styles.badgeIcon} src="/campersImage/petrol.svg" alt="" />
+          {formatLabel(camper.engine)}
+        </span>
+        {camper.amenities.map((amenity) => {
+          const Icon = getAmenityIcon(amenity);
+          return (
+            <span key={amenity} className={styles.badge}>
+              <Icon className={styles.badgeIcon} />
+              {formatLabel(amenity)}
+            </span>
+          );
+        })}
+        <span className={styles.badge}>
+          <img className={styles.badgeIcon} src="/campersImage/alcove.svg" alt="" />
+          {formatLabel(camper.form)}
+        </span>
+      </div>
 
-        <div className={styles.row}>
-          <dt>Engine</dt>
-          <dd>{camper.engine}</dd>
-        </div>
-
-        <div className={styles.row}>
-          <dt>Transmission</dt>
-          <dd>{camper.transmission}</dd>
-        </div>
-
-        <div className={styles.row}>
-          <dt>Length</dt>
-          <dd>{camper.length}</dd>
-        </div>
-
-        <div className={styles.row}>
-          <dt>Width</dt>
-          <dd>{camper.width}</dd>
-        </div>
-
-        <div className={styles.row}>
-          <dt>Height</dt>
-          <dd>{camper.height}</dd>
-        </div>
-
-        {camper.tank && (
-          <div className={styles.row}>
-            <dt>Tank</dt>
-            <dd>{camper.tank}</dd>
+      <dl className={styles.specList}>
+        {SPEC_ROWS.map(({ label, getValue }) => (
+          <div key={label} className={styles.specRow}>
+            <dt className={styles.specLabel}>{label}</dt>
+            <dd className={styles.specValue}>{getValue(camper)}</dd>
           </div>
-        )}
-
-        {camper.consumption && (
-          <div className={styles.row}>
-            <dt>Consumption</dt>
-            <dd>{camper.consumption}</dd>
-          </div>
-        )}
+        ))}
       </dl>
-    </section>
+    </div>
   );
-}
+};
+
+export default VehicleDetails;

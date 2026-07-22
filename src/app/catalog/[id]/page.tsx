@@ -1,59 +1,84 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
+"use client";
 
-import { BookingForm } from "@/components/BookingForm/BookingForm";
-import { CamperGallery } from "@/components/CamperGallery/CamperGallery";
-import { VehicleDetails } from "@/components/VehicleDetails/VehicleDetails";
-import { CamperReviews } from "@/components/CamperReviews/CamperReviews";
-
-import { getCamperById, getCamperReviews } from "@/services/campers";
-import type { CamperDetails, Review } from "@/types/camper";
-
+import { useParams } from "next/navigation";
+import { useCamperQuery } from "@/hooks/useCamperQuery";
+import CamperGallery from "@/components/CamperGallery/CamperGallery";
+import CamperReviews from "@/components/CamperReviews/CamperReviews";
+import BookingForm from "@/components/BookingForm/BookingForm";
+import VehicleDetails from "@/components/VehicleDetails/VehicleDetails";
+import StarRating from "@/components/StarRating/StarRating";
+import Spinner from "@/components/Spinner/Spinner";
 import styles from "./page.module.css";
 
-export default async function CamperPage({ params }: { params: { id: string } }) {
-  try {
-    const { id } = params;
+export default function CamperDetailsPage() {
+  const { id } = useParams<{ id: string }>();
+  const { data: camper, isLoading, isError } = useCamperQuery(id);
 
-    const camper: CamperDetails = await getCamperById(id);
-    const reviews: Review[] = await getCamperReviews(id);
-
+  if (isLoading) {
     return (
-      <section className={styles.details}>
-        <Link className={styles.backLink} href="/catalog">
-          ← Back to catalog
-        </Link>
-
-        <div className={styles.titleBlock}>
-          <div>
-            <h1 className={styles.title}>{camper.name}</h1>
-
-            <div className={styles.meta}>
-              <span>★ {camper.rating} ({reviews.length} Reviews)</span>
-              <span>⌖ {camper.location}</span>
-            </div>
-          </div>
-
-          <strong className={styles.price}>€{camper.price.toFixed(2)}</strong>
+      <main className={`container ${styles.page}`}>
+        <div className={styles.state}>
+          <Spinner
+            size={40}
+            color="#c1663a"
+            secondaryColor="rgba(193, 102, 58, 0.35)"
+          />
         </div>
+      </main>
+    );
+  }
 
-        <CamperGallery camper={camper} />
+  if (isError || !camper) {
+    return (
+      <main className={`container ${styles.page}`}>
+        <p className={styles.state}>
+          Something went wrong while loading this camper. Please try again.
+        </p>
+      </main>
+    );
+  }
 
-        <div className={styles.body}>
-          <div className={styles.left}>
-            <p className={styles.description}>{camper.description}</p>
+  return (
+    <main className={`container ${styles.page}`}>
+      <div className={styles.grid}>
+        <div className={styles.topRow}>
+          <CamperGallery gallery={camper.gallery} camperName={camper.name} />
+
+          <div className={styles.infoCard}>
+            <div className={styles.infoCardContent}>
+              <h1 className={styles.name}>{camper.name}</h1>
+
+              <div className={styles.metaRow}>
+                <span className={styles.meta}>
+                  <StarRating rating={camper.rating} />
+                  {camper.rating} ({camper.totalReviews} Reviews)
+                </span>
+                <span className={styles.meta}>
+                  <img
+                    className={styles.metaIcon}
+                    src="/campersImage/map.svg"
+                    alt=""
+                  />
+                  {camper.location}
+                </span>
+              </div>
+
+              <p className={styles.price}>&euro;{camper.price}</p>
+              <p className={styles.description}>{camper.description}</p>
+            </div>
             <VehicleDetails camper={camper} />
           </div>
+        </div>
 
-          <div className={styles.right}>
+        <div className={styles.bottomRow}>
+          <h2 className={styles.title}>Reviews</h2>
+
+          <div className={styles.reviewsContainer}>
+            <CamperReviews camperId={camper.id} />
             <BookingForm camperId={camper.id} />
           </div>
         </div>
-
-        <CamperReviews reviews={reviews} />
-      </section>
-    );
-  } catch {
-    notFound();
-  }
+      </div>
+    </main>
+  );
 }

@@ -1,47 +1,144 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { TbExclamationCircleFilled } from "react-icons/tb";
 import { createBookingRequest } from "@/services/campers";
-import type { BookingRequestPayload } from "@/types/camper";
+import Spinner from "@/components/Spinner/Spinner";
 import styles from "./BookingForm.module.css";
 
-export function BookingForm({ camperId }: { camperId: string }) {
-  const [message, setMessage] = useState("");
+interface BookingFormProps {
+  camperId: string;
+}
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
+interface BookingFormErrors {
+  name?: string;
+  email?: string;
+}
+
+const NAME_PATTERN = /^[\p{L}][\p{L}\s'-]*$/u;
+const EMAIL_PATTERN = /^[a-zA-Z0-9_+-]+(\.[a-zA-Z0-9_+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/;
+
+const BookingForm = ({ camperId }: BookingFormProps) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<BookingFormErrors>({});
+
+  const mutation = useMutation({
+    mutationFn: () =>
+      createBookingRequest(camperId, { name: name.trim(), email: email.trim() }),
+    onSuccess: (data) => {
+      toast.success(data.message);
+      setName("");
+      setEmail("");
+      setErrors({});
+    },
+    onError: () => {
+      toast.error("Something went wrong. Please try again.");
+    },
+  });
+
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+    if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
+  };
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+    if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    if (!form.reportValidity()) return;
 
-    const formData = new FormData(form);
-    const payload: BookingRequestPayload = {
-      name: String(formData.get("name") ?? ""),
-      email: String(formData.get("email") ?? ""),
-      bookingDate: String(formData.get("bookingDate") ?? ""),
-      comment: String(formData.get("comment") ?? ""),
-    };
-
-    try {
-      await createBookingRequest(camperId, payload);
-      setMessage("Booking request sent. We will contact you soon!");
-      form.reset();
-    } catch {
-      setMessage("Unable to send your request. Please try again later.");
+    const nextErrors: BookingFormErrors = {};
+    if (name.trim() === "") {
+      nextErrors.name = "Please enter your full name.";
+    } else if (!NAME_PATTERN.test(name.trim())) {
+      nextErrors.name = "Name can only contain letters, spaces, hyphens, and apostrophes.";
     }
+    if (email.trim() === "") {
+      nextErrors.email = "Please enter your email address.";
+    } else if (!EMAIL_PATTERN.test(email.trim())) {
+      nextErrors.email = "Please enter a valid email address.";
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+
+    setErrors({});
+    mutation.mutate();
   };
 
   return (
-    <form className={styles.booking} onSubmit={submit}>
-      <h2>Book your campervan now</h2>
-      <p>Leave your contacts and we will help plan the trip.</p>
+    <div className={styles.wrapper}>
+      <h2 className={styles.title}>Book your campervan now</h2>
+      <p className={styles.subtitle}>
+        Stay connected! We are always ready to help you.
+      </p>
 
-      <input name="name" placeholder="Name*" required />
-      <input name="email" type="email" placeholder="Email*" required />
-      <input name="bookingDate" type="date" required />
-      <textarea name="comment" placeholder="Comment" />
-
-      <button className={styles.primary}>Send request</button>
-      <small aria-live="polite">{message}</small>
-    </form>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
+        <div className={styles.inputGroup}>
+          <div className={styles.fieldWrapper}>
+            <label htmlFor="booking-name" className="visually-hidden">
+              Name
+            </label>
+            <input
+              id="booking-name"
+              className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
+              type="text"
+              placeholder="Name*"
+              value={name}
+              onChange={handleNameChange}
+              aria-invalid={Boolean(errors.name)}
+              aria-describedby={errors.name ? "booking-name-error" : undefined}
+            />
+            {errors.name && (
+              <>
+                <TbExclamationCircleFilled className={styles.errorIcon} />
+                <p id="booking-name-error" className={styles.errorText}>
+                  {errors.name}
+                </p>
+              </>
+            )}
+          </div>
+          <div className={styles.fieldWrapper}>
+            <label htmlFor="booking-email" className="visually-hidden">
+              Email
+            </label>
+            <input
+              id="booking-email"
+              className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+              type="email"
+              placeholder="Email*"
+              value={email}
+              onChange={handleEmailChange}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? "booking-email-error" : undefined}
+            />
+            {errors.email && (
+              <>
+                <TbExclamationCircleFilled className={styles.errorIcon} />
+                <p id="booking-email-error" className={styles.errorText}>
+                  {errors.email}
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={mutation.isPending}
+        >
+          {mutation.isPending ? <Spinner /> : "Send"}
+        </button>
+      </form>
+    </div>
   );
-}
+};
+
+export default BookingForm;

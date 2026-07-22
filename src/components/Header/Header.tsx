@@ -2,63 +2,45 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 
-const links = [
+const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/catalog", label: "Catalog" },
 ];
 
-export function Header() {
+const Header = () => {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-  }, [open]);
 
   return (
     <header className={styles.header}>
-      {open && <div className={styles.overlay} onClick={() => setOpen(false)} />}
-
-      <div className={styles.container}>
-        <Link href="/" className={styles.logo} onClick={() => setOpen(false)}>
-          <span>Road</span>Nest
+      <div className={`container ${styles.inner}`}>
+        <Link href="/" className={styles.logo}>
+          <span className={styles.logoTravel}>Travel</span>
+          <span className={styles.logoTrucks}>Trucks</span>
         </Link>
+        <nav className={styles.nav}>
+          <ul className={styles.navList}>
+            {NAV_LINKS.map(({ href, label }) => {
+              const isActive =
+                href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-        <nav className={`${styles.navigation} ${open ? styles.open : ""}`}>
-          {links.map((link) => {
-            const isActive =
-              pathname === link.href ||
-              (link.href !== "/" && pathname.startsWith(link.href));
-
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={
-                  isActive
-                    ? `${styles.navLink} ${styles.active}`
-                    : styles.navLink
-                }
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </nav>
-
-        <button
-          className={`${styles.menuBtn} ${open ? styles.menuOpen : ""}`}
-          onClick={() => setOpen(!open)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
       </div>
     </header>
   );
-}
+};
+
+export default Header;

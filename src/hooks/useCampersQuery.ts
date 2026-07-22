@@ -1,0 +1,26 @@
+"use client";
+
+import { useInfiniteQuery, keepPreviousData } from "@tanstack/react-query";
+import { getCampers } from "@/services/campers";
+import type { CampersFilters, CampersListResponse } from "@/types/camper";
+
+const PER_PAGE = 4;
+
+export function useCampersQuery(filters: CampersFilters = {}) {
+  const query = useInfiniteQuery<CampersListResponse>({
+    queryKey: ["campers", filters],
+    queryFn: ({ pageParam }) =>
+      getCampers(filters, pageParam as number, PER_PAGE),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+    placeholderData: keepPreviousData,
+  });
+
+  const campers = query.data?.pages.flatMap((page) => page.campers) ?? [];
+
+  return {
+    ...query,
+    campers,
+  };
+}

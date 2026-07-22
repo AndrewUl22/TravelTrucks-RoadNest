@@ -1,5 +1,3 @@
-// amenityIcons: maps each Amenity value to a react-icons icon for vehicle-detail badges.
-
 import {
   TbAirConditioning,
   TbBath,
@@ -11,7 +9,6 @@ import {
   TbGasStation,
   TbDroplet,
 } from "react-icons/tb";
-
 import type { IconType } from "react-icons";
 import type { Amenity } from "@/types/camper";
 

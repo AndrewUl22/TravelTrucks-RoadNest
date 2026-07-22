@@ -71,72 +71,75 @@ const Filters = ({ onApply, isLoading }: FiltersProps) => {
 
       <div className={styles.filtersWrapper}>
         <h2 className={styles.filtersTitle}>Filters</h2>
-
         {isFiltersLoading && (
           <div className={styles.filtersState}>
             <Spinner
               size={24}
-              color="#829b91"
-              secondaryColor="rgba(130, 155, 145, 0.4)"
+              color="#c1663a"
+              secondaryColor="rgba(193, 102, 58, 0.35)"
             />
           </div>
         )}
-
         {isFiltersError && (
           <p className={styles.errorText}>
             Something went wrong while loading filter options.
           </p>
         )}
-
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>Camper form</legend>
-          {data?.forms.map((value) => (
-            <label key={value} className={styles.radioLabel}>
-              <input
-                type="radio"
-                name="form"
-                value={value}
-                checked={form === value}
-                onChange={(event) => setForm(event.target.value)}
-                className={styles.radio}
-              />
-              {formatLabel(value)}
-            </label>
-          ))}
+          <div className={styles.optionsRow}>
+            {data?.forms.map((value) => (
+              <label key={value} className={styles.radioLabel}>
+                <input
+                  type="radio"
+                  name="form"
+                  value={value}
+                  checked={form === value}
+                  onChange={(event) => setForm(event.target.value)}
+                  className={styles.radio}
+                />
+                {formatLabel(value)}
+              </label>
+            ))}
+          </div>
         </fieldset>
 
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>Engine</legend>
-          {data?.engines.map((value) => (
-            <label key={value} className={styles.radioLabel}>
-              <input
-                type="radio"
-                name="engine"
-                value={value}
-                checked={engine === value}
-                onChange={(event) => setEngine(event.target.value)}
-                className={styles.radio}
-              />
-              {formatLabel(value)}
-            </label>
-          ))}
+          <div className={styles.optionsRow}>
+            {data?.engines.map((value) => (
+              <label key={value} className={styles.radioLabel}>
+                <input
+                  type="radio"
+                  name="engine"
+                  value={value}
+                  checked={engine === value}
+                  onChange={(event) => setEngine(event.target.value)}
+                  className={styles.radio}
+                />
+                {formatLabel(value)}
+              </label>
+            ))}
+          </div>
         </fieldset>
 
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>Transmission</legend>
-          {data?.transmissions.map((value) => (
-            <label key={value} className={styles.radioLabel}>
-              <input
-                type="radio"
-                name="transmission"
-                value={value}
-                checked={transmission === value}
-                onChange={(event) => setTransmission(event.target.value)}
-                className={styles.radio}
-              />
-              {formatLabel(value)}
-            </label>
-          ))}
+          <div className={styles.optionsRow}>
+            {data?.transmissions.map((value) => (
+              <label key={value} className={styles.radioLabel}>
+                <input
+                  type="radio"
+                  name="transmission"
+                  value={value}
+                  checked={transmission === value}
+                  onChange={(event) => setTransmission(event.target.value)}
+                  className={styles.radio}
+                />
+                {formatLabel(value)}
+              </label>
+            ))}
+          </div>
         </fieldset>
       </div>
 
@@ -147,7 +150,6 @@ const Filters = ({ onApply, isLoading }: FiltersProps) => {
       >
         {isLoading ? <Spinner /> : "Search"}
       </button>
-
       <button
         type="button"
         className={styles.clearButton}

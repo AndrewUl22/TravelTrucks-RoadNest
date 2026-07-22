@@ -1,47 +1,90 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Camper } from "@/types/camper";
+import { formatLabel } from "@/utils/formatLabel";
 import styles from "./CamperCard.module.css";
 
-const formatPrice = (value: number) => `€${value.toFixed(2)}`;
+interface CamperCardProps {
+  camper: Camper;
+  priority?: boolean;
+}
 
-export default function CamperCard({ camper }: { camper: Camper }) {
-  const href = `/catalog/${camper.id}`;
-
+const CamperCard = ({ camper, priority }: CamperCardProps) => {
   return (
     <li className={styles.card}>
-      <Link href={href} className={styles.cardLink}>
-        <div className={styles.imageWrap}>
-          <img
-            src={camper.coverImage}
-            alt={camper.name}
-            className={styles.image}
-          />
+      <Image
+        className={styles.image}
+        src={camper.coverImage}
+        alt={camper.name}
+        width={290}
+        height={310}
+        priority={priority}
+      />
+      <div className={styles.content}>
+        <div className={styles.headerRow}>
+          <h3 className={styles.name}>{camper.name}</h3>
+          <span className={styles.price}>&euro;{camper.price}</span>
         </div>
 
-        <div className={styles.info}>
-          <div className={styles.top}>
-            <h2 className={styles.title}>{camper.name}</h2>
-            <strong className={styles.price}>{formatPrice(camper.price)}</strong>
-          </div>
-
-          <div className={styles.meta}>
-            <span>
-              ★ {camper.rating} ({camper.totalReviews} Reviews)
-            </span>
-            <span>⌖ {camper.location}</span>
-          </div>
-
-          <p className={styles.description}>{camper.description}</p>
-
-          <div className={styles.chips}>
-            <span>{camper.engine}</span>
-            <span>{camper.transmission}</span>
-            <span>{camper.form}</span>
-          </div>
-
-          <span className={styles.more}>Show more</span>
+        <div className={styles.metaRow}>
+          <span className={styles.meta}>
+            <img
+              className={styles.metaIcon}
+              src="/campersImage/Rating.svg"
+              alt=""
+            />
+            {camper.rating} ({camper.totalReviews} Reviews)
+          </span>
+          <span className={styles.meta}>
+            <img
+              className={styles.metaIcon}
+              src="/campersImage/map.svg"
+              alt=""
+            />
+            {camper.location}
+          </span>
         </div>
-      </Link>
+
+        <p className={styles.description}>{camper.description}</p>
+
+        <div className={styles.badges}>
+          <span className={styles.badge}>
+            <img
+              className={styles.badgeIcon}
+              src="/campersImage/petrol.svg"
+              alt=""
+            />
+            {formatLabel(camper.engine)}
+          </span>
+          <span className={styles.badge}>
+            <img
+              className={styles.badgeIcon}
+              src="/campersImage/automatic.svg"
+              alt=""
+            />
+            {formatLabel(camper.transmission)}
+          </span>
+          <span className={styles.badge}>
+            <img
+              className={styles.badgeIcon}
+              src="/campersImage/alcove.svg"
+              alt=""
+            />
+            {formatLabel(camper.form)}
+          </span>
+        </div>
+
+        <Link
+          href={`/catalog/${camper.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.showMoreButton}
+        >
+          Show more
+        </Link>
+      </div>
     </li>
   );
-}
+};
+
+export default CamperCard;

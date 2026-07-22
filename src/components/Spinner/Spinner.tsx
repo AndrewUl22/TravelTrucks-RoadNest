@@ -1,25 +1,25 @@
-"use client";
+import { Oval } from "react-loader-spinner";
 
-import styles from "./Spinner.module.css";
-
-export default function Spinner({
-  size = 24,
-  color = "#829b91",
-  secondaryColor = "rgba(130, 155, 145, 0.4)",
-}: {
+interface SpinnerProps {
   size?: number;
   color?: string;
   secondaryColor?: string;
-}) {
-  return (
-    <span
-      className={styles.spinner}
-      style={{
-        width: size,
-        height: size,
-        borderColor: secondaryColor,
-        borderTopColor: color,
-      }}
-    />
-  );
 }
+
+const Spinner = ({
+  size = 20,
+  color = "#fff",
+  secondaryColor = "rgba(255, 255, 255, 0.4)",
+}: SpinnerProps) => (
+  <Oval
+    visible
+    height={size}
+    width={size}
+    strokeWidth={5}
+    color={color}
+    secondaryColor={secondaryColor}
+    ariaLabel="Loading"
+  />
+);
+
+export default Spinner;

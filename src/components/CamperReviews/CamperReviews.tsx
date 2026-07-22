@@ -1,37 +1,62 @@
-import type { Review } from "@/types/camper";
+"use client";
+
+import { useCamperReviewsQuery } from "@/hooks/useCamperReviewsQuery";
+import Spinner from "@/components/Spinner/Spinner";
+import StarRating from "@/components/StarRating/StarRating";
 import styles from "./CamperReviews.module.css";
 
 interface CamperReviewsProps {
-  reviews: Review[];
+  camperId: string;
 }
 
-export function CamperReviews({ reviews }: CamperReviewsProps) {
-  if (!reviews.length) {
-    return (
-      <section className={styles.reviews}>
-        <h2 className={styles.heading}>Reviews</h2>
-        <p className={styles.empty}>No reviews yet.</p>
-      </section>
-    );
-  }
+const CamperReviews = ({ camperId }: CamperReviewsProps) => {
+  const { data: reviews, isLoading, isError } = useCamperReviewsQuery(camperId);
 
   return (
-    <section className={styles.reviews}>
-      <h2 className={styles.heading}>Reviews</h2>
+    <div className={styles.wrapper}>
+      {isLoading && (
+        <div className={styles.state}>
+          <Spinner
+            size={32}
+            color="#c1663a"
+            secondaryColor="rgba(193, 102, 58, 0.35)"
+          />
+        </div>
+      )}
 
-      <ul className={styles.list}>
-        {reviews.map((review) => (
-          <li key={review.id} className={styles.item}>
-            <div className={styles.header}>
-              <strong className={styles.author}>{review.author}</strong>
-              <span className={styles.rating}>★ {review.rating}</span>
-            </div>
+      {isError && (
+        <p className={styles.state}>
+          Something went wrong while loading reviews. Please try again.
+        </p>
+      )}
 
-            <p className={styles.comment}>{review.comment}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
+      {!isLoading && !isError && reviews?.length === 0 && (
+        <p className={styles.state}>No reviews yet.</p>
+      )}
+
+      {!isLoading && !isError && reviews && reviews.length > 0 && (
+        <ul className={styles.list}>
+          {reviews.map((review) => (
+            <li key={review.id} className={styles.review}>
+              <div className={styles.header}>
+                <div className={styles.avatar}>
+                  {review.reviewer_name.charAt(0).toUpperCase()}
+                </div>
+                <div className={styles.reviewerInfo}>
+                  <span className={styles.name}>{review.reviewer_name}</span>
+                  <StarRating rating={review.reviewer_rating} />
+                </div>
+              </div>
+
+              <div className={styles.content}>
+                <p className={styles.comment}>{review.comment}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
-}
+};
 
+export default CamperReviews;

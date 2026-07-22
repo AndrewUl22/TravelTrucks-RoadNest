@@ -1,0 +1,19 @@
+import type { Camper } from "@/types/camper";
+import CamperCard from "@/components/CamperCard/CamperCard";
+import styles from "./CamperList.module.css";
+
+interface CamperListProps {
+  campers: Camper[];
+}
+
+const CamperList = ({ campers }: CamperListProps) => {
+  return (
+    <ul className={styles.list}>
+      {campers.map((camper, index) => (
+        <CamperCard key={camper.id} camper={camper} priority={index === 0} />
+      ))}
+    </ul>
+  );
+};
+
+export default CamperList;

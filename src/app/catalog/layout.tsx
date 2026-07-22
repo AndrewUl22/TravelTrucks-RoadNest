@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Catalog | RoadNest",
+  title: "Catalog | TravelTrucks",
   description:
-    "Browse our camper catalog and filter by vehicle type and amenities to find your perfect campervan.",
+    "Browse our camper catalog and filter by location, body form, engine and transmission to find your perfect campervan.",
 };
 
 export default function CatalogLayout({

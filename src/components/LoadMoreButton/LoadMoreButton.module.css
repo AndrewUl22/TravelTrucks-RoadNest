@@ -1,0 +1,27 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  min-width: 145px;
+  height: 56px;
+  padding: 16px 32px;
+  border-radius: 200px;
+  border: 1px solid var(--gray-light);
+  background-color: var(--white);
+  color: var(--main);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--terracotta);
+  color: var(--terracotta-dark);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

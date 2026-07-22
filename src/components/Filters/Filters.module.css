@@ -1,71 +1,235 @@
 .filters {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  width: 100%;
+  max-width: 312px;
 }
 
-.group {
+.field {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.group label {
-  font-weight: 600;
-  color: #fff;
+.label {
+  font-weight: 400;
+  color: var(--gray);
 }
 
-.options {
+.locationInputWrapper {
+  position: relative;
+}
+
+.locationIcon {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+  color: var(--gray);
+  transition: color 0.2s ease;
+}
+
+.locationInput {
+  font-weight: 400;
+  width: 100%;
+  padding: 16px 16px 16px 48px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background-color: var(--white);
+  box-shadow: 0 0 0 1px var(--gray-light);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.locationInput:hover {
+  box-shadow: 0 0 0 1px var(--terracotta-pastel-hover);
+}
+
+.locationInput:focus {
+  outline: none;
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 1px var(--terracotta);
+  color: var(--main);
+}
+
+.locationInput:focus ~ .locationIcon,
+.locationInputWrapper:focus-within .locationIcon {
+  color: var(--terracotta);
+}
+
+.filtersWrapper {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 24px;
+  margin-top: 40px;
 }
 
-input[type="text"] {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #444;
-  background: #222;
-  color: #fff;
-}
-
-button {
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
+.filtersTitle {
   font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
 }
 
-.search {
-  background: #d00000;
-  color: #fff;
+.errorText {
+  font-size: 14px;
+  color: var(--button);
 }
 
-.clear {
-  background: #444;
-  color: #fff;
+.filtersState {
+  display: flex;
+  justify-content: center;
 }
 
-@media (max-width: 1024px) {
-  .filters {
-    padding: 16px;
-  }
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: none;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.legend {
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.optionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.radioLabel {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--gray-light);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--main);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.15s ease;
+}
+
+.radioLabel:hover {
+  border-color: var(--terracotta-pastel);
+  background-color: var(--terracotta-tint);
+  transform: translateY(-1px);
+}
+
+.radioLabel:has(.radio:checked) {
+  background-color: var(--terracotta);
+  border-color: var(--terracotta);
+  color: var(--white);
+}
+
+.radioLabel:has(.radio:focus-visible) {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 2px;
+}
+
+.radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.searchButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 312px;
+  height: 56px;
+  padding: 16px 60px;
+  border-radius: 200px;
+  background-color: var(--grey-green);
+  color: var(--white);
+  font-weight: 500;
+  font-size: 16px;
+  align-self: flex-start;
+  margin-top: 48px;
+  transition: background-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.searchButton:hover:not(:disabled) {
+  background-color: var(--green-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(156, 78, 42, 0.28);
+}
+
+.searchButton:disabled {
+  opacity: 0.85;
+  cursor: default;
+}
+
+.clearButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 312px;
+  height: 56px;
+  padding: 16px 32px;
+  border-radius: 200px;
+  border: 1px solid var(--gray-light);
+  background-color: var(--white);
+  color: var(--main);
+  font-weight: 500;
+  font-size: 16px;
+  align-self: flex-start;
+  margin-top: 16px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.clearIcon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease;
+}
+
+.clearButton:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta-dark);
+}
+
+.clearButton:hover .clearIcon {
+  transform: rotate(90deg);
 }
 
 @media (max-width: 768px) {
-  .filters {
-    background: #111;
-    border-radius: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  input[type="text"] {
-    padding: 8px;
+  .filtersTitle {
+    font-size: 17px;
   }
 
-  button {
-    padding: 10px;
+  .legend {
+    font-size: 14px;
+  }
+
+  .radioLabel {
+    border: none;
+    background-color: var(--badges);
+    padding: 9px 16px;
+    font-size: 14px;
+  }
+
+  .radioLabel:hover {
+    background-color: var(--terracotta-tint);
+    transform: none;
+  }
+
+  .radioLabel:has(.radio:checked) {
+    background-color: var(--terracotta);
+    color: var(--white);
   }
 }

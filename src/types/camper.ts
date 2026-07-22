@@ -1,4 +1,3 @@
-// Amenity types
 export type Amenity =
   | "ac"
   | "bathroom"
@@ -10,22 +9,6 @@ export type Amenity =
   | "gas"
   | "water";
 
-// Vehicle type
-export type VehicleType =
-  | "van"
-  | "semi-integrated"
-  | "fully-integrated"
-  | "alcove";
-
-// Review type
-export interface Review {
-  id: string;
-  author: string;
-  rating: number;
-  comment: string;
-}
-
-// Base Camper (list item)
 export interface Camper {
   id: string;
   name: string;
@@ -33,54 +16,68 @@ export interface Camper {
   rating: number;
   location: string;
   description: string;
-  form: VehicleType;
+  form: string;
   length: string;
   width: string;
   height: string;
-  tank?: string;
-  consumption?: string;
+  tank: string;
+  consumption: string;
   transmission: string;
   engine: string;
-  gallery: string[];
   amenities: Amenity[];
+  coverImage: string;
+  totalReviews: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
-// CamperDetails (full camper page)
-export interface CamperDetails extends Camper {
-  // можно добавлять сюда новые поля, если API вернёт больше данных
+export interface GalleryImage {
+  id: string;
+  camperId: string;
+  thumb: string;
+  original: string;
+  order: number;
 }
 
-// Фильтры каталога
+export type CamperDetails = Omit<Camper, "coverImage"> & {
+  gallery: GalleryImage[];
+};
+
+export interface Review {
+  id: string;
+  camperId: string;
+  reviewer_name: string;
+  reviewer_rating: number;
+  comment: string;
+  createdAt: string;
+}
+
+export interface CampersListResponse {
+  page: number;
+  perPage: number;
+  total: number;
+  totalPages: number;
+  campers: Camper[];
+}
+
+export interface FiltersResponse {
+  forms: string[];
+  transmissions: string[];
+  engines: string[];
+}
+
 export interface CampersFilters {
   location?: string;
-  form?: VehicleType;
-  engine?: string;
+  form?: string;
   transmission?: string;
+  engine?: string;
 }
 
-// Ответ списка кемперов
-export interface CampersListResponse {
-  campers: Camper[];
-  total: number;
-}
-
-// Ответ фильтров
-export interface FiltersResponse {
-  forms: VehicleType[];
-  engines: string[];
-  transmissions: string[];
-}
-
-// Бронирование
 export interface BookingRequestPayload {
   name: string;
   email: string;
-  bookingDate: string;
-  comment?: string;
 }
 
 export interface BookingRequestResponse {
-  id: string;
-  camperId: string;
-  status: "pending" | "confirmed" | "rejected";
+  message: string;
 }

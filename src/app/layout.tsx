@@ -1,26 +1,36 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import Header from "@/components/Header/Header";
+import QueryProvider from "@/providers/QueryProvider";
 import "./globals.css";
-import { Providers } from "./providers";
-import { Header } from "@/components/Header/Header";
-import Loader from "@/components/Loader/Loader";
-import { Footer } from "@/components/Footer/Footer";
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "TravelTrucks RoadNest — Camper rentals",
-  description: "Find a camper for your next adventure.",
+  title: "TravelTrucks",
+  description: "Camper rental catalog",
+  icons: {
+    icon: "/campersImage/favicon.png",
+  },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="uk">
+    <html lang="en" className={inter.variable}>
       <body>
-        <Loader />
-        <Providers>
-          <Header />
-          {children}
-          <Footer />
-        </Providers>
+        <Header />
+        <Toaster position="top-right" />
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
