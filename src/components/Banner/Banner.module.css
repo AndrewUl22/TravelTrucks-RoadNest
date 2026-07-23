@@ -36,12 +36,25 @@
   flex-direction: column;
 }
 
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .title {
   font-size: 48px;
   font-weight: 600;
   line-height: 67%;
   color: var(--inputs);
   margin-bottom: 16px;
+  animation: heroFadeUp 0.7s ease both;
+  animation-delay: 0.1s;
 }
 
 .text {
@@ -49,6 +62,8 @@
   font-weight: 600;
   line-height: 1.33;
   color: var(--inputs);
+  animation: heroFadeUp 0.7s ease both;
+  animation-delay: 0.3s;
 }
 
 .button {
@@ -65,6 +80,8 @@
   font-size: 16px;
   letter-spacing: -0.01em;
   box-shadow: 0 10px 24px rgba(156, 78, 42, 0.28);
+  animation: heroFadeUp 0.7s ease both;
+  animation-delay: 0.5s;
   transition: background-color 0.2s ease, transform 0.2s ease,
     box-shadow 0.2s ease;
 }

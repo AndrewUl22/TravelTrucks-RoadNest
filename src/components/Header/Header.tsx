@@ -11,33 +11,38 @@ const NAV_LINKS = [
 
 const Header = () => {
   const pathname = usePathname();
+  const isHome = pathname === "/";
 
   return (
     <header className={styles.header}>
-      <div className={`container ${styles.inner}`}>
+      <div
+        className={`container ${styles.inner} ${isHome ? styles.innerHome : ""}`}
+      >
         <Link href="/" className={styles.logo}>
           <span className={styles.logoTravel}>Travel</span>
           <span className={styles.logoTrucks}>Trucks</span>
         </Link>
-        <nav className={styles.nav}>
-          <ul className={styles.navList}>
-            {NAV_LINKS.map(({ href, label }) => {
-              const isActive =
-                href === "/" ? pathname === "/" : pathname.startsWith(href);
+        {!isHome && (
+          <nav className={styles.nav}>
+            <ul className={styles.navList}>
+              {NAV_LINKS.map(({ href, label }) => {
+                const isActive =
+                  href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-              return (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+                return (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        )}
       </div>
     </header>
   );

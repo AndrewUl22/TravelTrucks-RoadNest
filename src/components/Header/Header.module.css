@@ -15,6 +15,16 @@
   height: var(--header-height);
 }
 
+.innerHome {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.innerHome .logo {
+  grid-column: 1;
+  justify-self: center;
+}
+
 .logo {
   grid-column: 1;
   justify-self: start;
